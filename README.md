@@ -16,7 +16,7 @@
 
 **Шаг 2. Создайте docker image**
 
-    docker build -t max_bot
+    docker build -t max_bot .
 
 **Шаг3. Запустите контейнер с передачей токена.(Пишите токен без кавычек)**
 
