@@ -8,22 +8,24 @@
     Установленный Docker
     BOT_TOKEN для подключения к боту
 
+
 **Шаг 1. Клонируйте и перейдите в репозиторий**
 
     git clone https://github.com/YanseSlim/max_bot
     cd max_bot
 
+**Шаг 2. Запустите docker desktop**
 
-**Шаг 2. Создайте docker image**
+**Шаг 3. Создайте docker image**
 
     docker build -t max_bot .
 
-**Шаг3. Запустите контейнер с передачей токена.(Пишите токен без кавычек)**
+**Шаг 4. Запустите контейнер с передачей токена.(Пишите токен без кавычек)**
 
     docker run -d -e BOT_TOKEN=ЗДЕСЬ ВАШ ТОКЕН --name max_bot max_bot
 
 
-**Шаг4. Проверьте работу**
+**Шаг 5. Проверьте работу**
 
     docker logs max_bot
 
