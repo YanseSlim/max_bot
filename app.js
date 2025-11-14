@@ -28,17 +28,18 @@ bot.use(async (ctx, next) => {
     type: ctx.update?.update_type,
     text: ctx.message?.body?.text,
     payload: ctx.message?.body?.payload,
-    user: ctx.user?.user_id
+    user: ctx.user?.user_id,
+    state: ctx.state
   });
   return next();
 });
 
 // Настройка обработчиков
 try {
+  setupCalculatorHandlers(bot);
   setupMainHandlers(bot);
   setupFAQHandlers(bot);
   setupProgramsHandlers(bot);
-  setupCalculatorHandlers(bot);
   setupNotificationsHandlers(bot);
   console.log('Все обработчики успешно настроены');
 } catch (error) {

@@ -1,6 +1,7 @@
 import { LocationAttachment, Keyboard } from '@maxhub/max-bot-api';
 import { getAbiturientMenu } from '../keyboards/abiturient.js';
 import { getUpcomingDeadlines } from '../config/deadlines.js'; // Добавляем этот импорт
+import { parseScores } from '../handlers/calculator.js';
 
 const WELCOME_IMAGE_URL = 'https://static.tildacdn.com/tild6234-3964-4832-b930-393763383461/196A0054_1.jpg';
 
@@ -67,9 +68,16 @@ export function setupMainHandlers(bot) {
   });
 
   bot.on('message_created', async (ctx) => {
-    // Пропускаем сообщения, которые уже обработаны другими обработчиками
-    if (ctx.message.body.text && !ctx.message.body.text.startsWith('/')) {
-      await handleUnknownMessage(ctx);
+     if (ctx.message.body.text && !ctx.message.body.text.startsWith('/')) {
+        // Проверяем, является ли сообщение вводом баллов ЕГЭ
+        const scores = parseScores(ctx.message.body.text.toLowerCase());
+        if (Object.keys(scores).length > 0) {
+            // Если это баллы ЕГЭ, пропускаем обработку в handleUnknownMessage
+            // Обработчик из калькулятора сам обработает это сообщение
+            return;
+        }
+        
+        await handleUnknownMessage(ctx);
     }
   });
 

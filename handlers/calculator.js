@@ -1,7 +1,7 @@
 import { PROGRAMS } from '../config/programs.js';
 import { getAbiturientMenu } from '../keyboards/abiturient.js';
 
-function parseScores(text) {
+export function parseScores(text) {
   const scores = {};
   const regex = /([а-яё]+)\s+(\d+)/gi;
   let match;
@@ -34,9 +34,11 @@ export function setupCalculatorHandlers(bot) {
 
   // Обработка ввода баллов
   bot.hears(/([а-яё]+)\s+(\d+)/gi, async (ctx) => {
+    console.log('Обработчик калькулятора сработал!');
     const text = ctx.message.body.text.toLowerCase();
     const scores = parseScores(text);
-    
+    console.log('Распарсенные баллы:', scores); 
+
     if (Object.keys(scores).length === 0) return;
     
     // Расчет доступных направлений
