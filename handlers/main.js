@@ -6,6 +6,14 @@ import { parseScores } from '../handlers/calculator.js';
 const WELCOME_IMAGE_URL = 'https://static.tildacdn.com/tild6234-3964-4832-b930-393763383461/196A0054_1.jpg';
 
 
+async function sendWelcomeMessage(ctx) {
+  const welcomeText = `Привет! Ты стоишь перед серьезным выбором в своей жизни, а я помогу тебе разобраться в этом. Что бы начать работу со мной введи команду /start`;
+
+  await ctx.reply(welcomeText, {
+    format: 'markdown'
+  });
+}
+
 export function setupMainHandlers(bot) {
   // Стартовая команда
   bot.command('start', async (ctx) => {
@@ -26,29 +34,33 @@ export function setupMainHandlers(bot) {
       `• Напомню о важных датах\n` + 
       `Конкурсные списки и детали поступления смотрите на официальном сайте ДВФУ https://postupi.dvfu.ru/`;
 
-
-
        try {
       // Загружаем изображение по URL
-      const image = await ctx.api.uploadImage({ 
-        url: WELCOME_IMAGE_URL 
-      });
+        const image = await ctx.api.uploadImage({ 
+          url: WELCOME_IMAGE_URL 
+        });
 
-      // Отправляем ОДНО сообщение с изображением, текстом и клавиатурой
-      await ctx.reply(message, {
-        format: 'markdown',
-        attachments: [image.toJson(), getAbiturientMenu()]
-      });
+        
+        await ctx.reply(message, {
+          format: 'markdown',
+          attachments: [image.toJson(), getAbiturientMenu()]
+        });
 
-    } catch (error) {
-      console.error('❌ Ошибка загрузки изображения:', error);
-      
-      // Fallback: отправляем только текст и клавиатуру
-      await ctx.reply(message, {
-        format: 'markdown',
-        attachments: [getAbiturientMenu()]
-      });
-    }
+      }
+      catch (error) {
+        console.error('❌ Ошибка загрузки изображения:', error);
+        
+        // Fallback: отправляем только текст и клавиатуру
+        await ctx.reply(message, {
+          format: 'markdown',
+          attachments: [getAbiturientMenu()]
+        });
+      }
+  });
+
+  bot.on('bot_started', async (ctx) => {
+    console.log('Новый пользователь начал диалог с ботом');
+    await sendWelcomeMessage(ctx);
   });
 
   // Команда помощи
