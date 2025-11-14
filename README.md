@@ -23,7 +23,7 @@ docker build -t max_bot
 
 Шаг3. Запустите контейнер с передачей токена.(Пишите токен без кавычек)
 
-docker run -d -e BOT_TOKEN="ЗДЕСЬ ВАН ТОКЕН" --name max_bot max_bot
+docker run -d -e BOT_TOKEN=ЗДЕСЬ ВАН ТОКЕН --name max_bot max_bot
 
 
 Шаг4. Проверьте работу 
